@@ -30,6 +30,8 @@ resource "google_compute_instance" "default" {
     ssh-keys = var.ssh_key
   }
 
+  metadata_startup_script = "apt install -y htop netcat-openbsd"
+
   tags = ["web", "dev"]
 }
 
