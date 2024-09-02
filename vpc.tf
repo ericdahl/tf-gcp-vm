@@ -31,7 +31,7 @@ resource "google_compute_firewall" "http" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags = ["web"]
+  target_tags   = ["web"]
 }
 
 resource "google_compute_firewall" "ssh" {
@@ -47,3 +47,17 @@ resource "google_compute_firewall" "ssh" {
   target_tags   = ["ssh"]
 }
 
+resource "google_compute_router" "default" {
+  name    = "tf-gcp-vm"
+  network = google_compute_network.default.name
+
+
+
+}
+
+resource "google_compute_router_nat" "default" {
+  name                               = "tf-gcp-vm"
+  router                             = google_compute_router.default.name
+  nat_ip_allocate_option             = "AUTO_ONLY"
+  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
+}
